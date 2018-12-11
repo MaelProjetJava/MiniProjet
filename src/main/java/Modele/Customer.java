@@ -65,7 +65,8 @@ public class Customer {
 
     public String getName()
     {
-        return this.name;
+        //return this.name;
+        return "test";
     }
 
     public String getAddr1()

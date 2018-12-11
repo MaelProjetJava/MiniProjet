@@ -4,7 +4,7 @@ public class CustomerRevenue {
     private String customerName;
     private long revenue;
     
-    CustomerRevenue(Customer customer, long revenue) {
+    public CustomerRevenue(Customer customer, long revenue) {
         this.customerName = customer.getName();
         this.revenue = revenue;
     }
