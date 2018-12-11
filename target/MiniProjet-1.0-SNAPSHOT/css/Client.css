@@ -1,0 +1,44 @@
+body{
+    background-color: #0188FE;
+    margin: auto;
+    width: 50%;
+    padding: 100px;
+    
+}
+h1{
+    font-family: Arial;
+    font-style: italic;
+    text-align: center;
+    font-size:50px;
+    
+} 
+#box{ background-color: #C1C1C1;
+      box-shadow: 1px 1px 100px red;
+     margin:auto;
+     width: 15em;
+    
+}
+#nom,#adresse1,#adresse2,#zip ,#ville,#etat,#fax,#tel,#email{
+    
+    padding : 5px;
+    display: block;
+    margin: 5px;
+}
+.nom ,.adresse1,.adresse2,.zip ,.ville,.etat,.fax,.tel,.email{
+    text-align: center;
+    text-transform: uppercase;
+    padding : 5px;
+    margin: 5px;
+}
+
+#action{
+    padding : 5px;
+    margin: 5px;
+}
+a{
+    font-family: Arial;
+    font-style: italic;
+    text-align: center;
+    display : block;
+    
+}
