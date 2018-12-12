@@ -2,19 +2,19 @@ package Modele;
 
 
 public class ProductCodeRevenue {
-    private ProductCode productCode;
-    private long revenue;
+    private String productCode;
+    private double revenue;
     
-    ProductCodeRevenue(ProductCode productCode, long revenue) {
+    ProductCodeRevenue(String productCode, double revenue) {
         this.productCode = productCode;
         this.revenue = revenue;
     }
     
-    public ProductCode getProductCode() {
+    public String getProductCode() {
         return productCode;
     }
     
-    public long getRevenue() {
+    public double getRevenue() {
         return revenue;
     }
 }

@@ -395,17 +395,85 @@ public class DAO implements IDAO
     }
 
     @Override
-    public List<ProductCodeRevenue> getProductCodesRevenues(Date startDate, Date endDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<ProductCodeRevenue> getProductCodesRevenues(Date startDate, Date endDate)
+    {
+        List<ProductCodeRevenue> result = new LinkedList<>();
+
+        String sql = "SELECT PRODUCT_CODE.DESCRIPTION, SUM(PURCHASE_ORDER.QUANTITY * PRODUCT.PURCHASE_COST) AS REVENU FROM"
+                  + " PURCHASE_ORDER INNER JOIN PRODUCT USING (PRODUCT_ID)"
+                  + " INNER JOIN PRODUCT_CODE ON PRODUCT.PRODUCT_CODE = PRODUCT_CODE.PROD_CODE GROUP BY (PRODUCT_CODE.DESCRIPTION)";
+        try (Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            try (ResultSet rs = stmt.executeQuery())
+            {
+                while (rs.next())
+                {
+                    result.add(new ProductCodeRevenue(rs.getString("DESCRIPTION"), rs.getDouble("REVENU")));
+                }
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return result;
     }
 
     @Override
-    public List<MicroMarketRevenue> getMicroMarketsRevenues(Date startDate, Date endDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<MicroMarketRevenue> getMicroMarketsRevenues(Date startDate, Date endDate)
+    {
+        List<MicroMarketRevenue> result = new LinkedList<>();
+
+        String sql = "SELECT MICRO_MARKET.ZIP_CODE, SUM(PURCHASE_ORDER.QUANTITY * PRODUCT.PURCHASE_COST) AS REVENU FROM\n" +
+"                            PURCHASE_ORDER INNER JOIN PRODUCT USING (PRODUCT_ID)\n" +
+"                                    INNER JOIN CUSTOMER USING (CUSTOMER_ID)\n" +
+"                                    INNER JOIN MICRO_MARKET ON CUSTOMER.ZIP = MICRO_MARKET.ZIP_CODE\n" +
+"            GROUP BY (MICRO_MARKET.ZIP_CODE);";
+
+        try (Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            try (ResultSet rs = stmt.executeQuery())
+            {
+                while (rs.next())
+                {
+                    result.add(new MicroMarketRevenue(rs.getString("ZIP_CODE"), rs.getDouble("REVENU")));
+                }
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return result;
     }
 
     @Override
-    public List<CustomerRevenue> getCustomersRevenues(Date startDate, Date endDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<CustomerRevenue> getCustomersRevenues(Date startDate, Date endDate)
+    {
+        List<CustomerRevenue> result = new LinkedList<>();
+
+        String sql = "SELECT CUSTOMER.NAME, SUM(PURCHASE_ORDER.QUANTITY * PRODUCT.PURCHASE_COST) AS REVENU FROM\n" +
+"                            PURCHASE_ORDER INNER JOIN PRODUCT USING (PRODUCT_ID)\n" +
+"                                    INNER JOIN CUSTOMER USING (CUSTOMER_ID)\n" +
+"            GROUP BY (CUSTOMER.NAME);";
+
+        try (Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            try (ResultSet rs = stmt.executeQuery())
+            {
+                while (rs.next())
+                {
+                    result.add(new CustomerRevenue(rs.getString("NAME"), rs.getDouble("REVENU")));
+                }
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return result;    
     }        
 }

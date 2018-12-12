@@ -1,19 +1,19 @@
 package Modele;
 
 public class CustomerRevenue {
-    private String customerName;
-    private long revenue;
+    private String customer;
+    private double revenue;
     
-    CustomerRevenue(Customer customer, long revenue) {
-        this.customerName = customer.getName();
+    CustomerRevenue(String customer, double revenue) {
+        this.customer = customer;
         this.revenue = revenue;
     }
     
-    public String getCustomerName() {
-        return customerName;
+    public String getCustomer() {
+        return customer;
     }
     
-    public long getRevenue() {
+    public double getRevenue() {
         return revenue;
     }
 }

@@ -28,7 +28,7 @@ public class Product {
         this.purchaseCost = purchaseCost;
         this.quantityOnHand = quantityOnHand;
         this.markup = markup;
-        this.available = available == "TRUE" ? true : false;
+        this.available = available.equals("TRUE") ? true : false;
         this.description = description;
     }
 

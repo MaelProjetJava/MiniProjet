@@ -2,19 +2,19 @@ package Modele;
 
 
 public class MicroMarketRevenue {
-    private String microMarketZip;
-    private long revenue;
+    private String microMarket;
+    private double revenue;
     
-    MicroMarketRevenue(MicroMarket microMarket, long revenue) {
-        this.microMarketZip = microMarket.getZipCode();
+    MicroMarketRevenue(String microMarket, double revenue) {
+        this.microMarket = microMarket;
         this.revenue = revenue;
     }
     
-    public String getMicroMarketZip() {
-        return microMarketZip;
+    public String getMicroMarket() {
+        return microMarket;
     }
     
-    public long getRevenue() {
+    public double getRevenue() {
         return revenue;
     }
 }
