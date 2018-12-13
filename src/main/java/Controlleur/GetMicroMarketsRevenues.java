@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Modele.MicroMarketRevenue;
+import java.sql.Date;
 
 /**
  *
@@ -44,21 +44,19 @@ public class GetMicroMarketsRevenues extends HttpServlet {
         
         String start = request.getParameter("start");
         String end = request.getParameter("end");
-        
-        SimpleDateFormat dateparser = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date startDate = new Date(Long.MIN_VALUE);
+        Date startDate = new Date(1);
         if (start != null) {
             try {
-                startDate = dateparser.parse(start);
-            } catch (ParseException e) {}
+                startDate = Date.valueOf(start);
+            } catch (IllegalArgumentException e) {}
         }
         
-        Date endDate = new Date(Long.MAX_VALUE);
+        Date endDate = new Date(8098, 12, 31);
         if (end != null) {
             try {
-                endDate = dateparser.parse(end);
-            } catch (ParseException e) {}
+                endDate = Date.valueOf(end);
+            } catch (IllegalArgumentException e) {}
         }
         
         IDAO dao = new DAO(DataSourceFactory.getDataSource());
