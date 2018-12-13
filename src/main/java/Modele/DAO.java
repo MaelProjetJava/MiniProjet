@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -401,10 +401,14 @@ public class DAO implements IDAO
 
         String sql = "SELECT PRODUCT_CODE.DESCRIPTION, SUM(PURCHASE_ORDER.QUANTITY * PRODUCT.PURCHASE_COST) AS REVENU FROM"
                   + " PURCHASE_ORDER INNER JOIN PRODUCT USING (PRODUCT_ID)"
-                  + " INNER JOIN PRODUCT_CODE ON PRODUCT.PRODUCT_CODE = PRODUCT_CODE.PROD_CODE GROUP BY (PRODUCT_CODE.DESCRIPTION)";
+                  + " INNER JOIN PRODUCT_CODE ON PRODUCT.PRODUCT_CODE = PRODUCT_CODE.PROD_CODE" +
+"            WHERE PURCHASE_ORDER.SALES_DATE BETWEEN ? AND ? GROUP BY (PRODUCT_CODE.DESCRIPTION)";
         try (Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
+            stmt.setDate(1, startDate);
+            stmt.setDate(2, endDate);
+            
             try (ResultSet rs = stmt.executeQuery())
             {
                 while (rs.next())
@@ -429,11 +433,15 @@ public class DAO implements IDAO
 "                            PURCHASE_ORDER INNER JOIN PRODUCT USING (PRODUCT_ID)\n" +
 "                                    INNER JOIN CUSTOMER USING (CUSTOMER_ID)\n" +
 "                                    INNER JOIN MICRO_MARKET ON CUSTOMER.ZIP = MICRO_MARKET.ZIP_CODE\n" +
+"            WHERE PURCHASE_ORDER.SALES_DATE BETWEEN ? AND ?" +
 "            GROUP BY (MICRO_MARKET.ZIP_CODE)";
 
         try (Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
+            stmt.setDate(1, startDate);
+            stmt.setDate(2, endDate);
+            
             try (ResultSet rs = stmt.executeQuery())
             {
                 while (rs.next())
@@ -457,11 +465,15 @@ public class DAO implements IDAO
         String sql = "SELECT CUSTOMER.NAME, SUM(PURCHASE_ORDER.QUANTITY * PRODUCT.PURCHASE_COST) AS REVENU FROM\n" +
 "                            PURCHASE_ORDER INNER JOIN PRODUCT USING (PRODUCT_ID)\n" +
 "                                    INNER JOIN CUSTOMER USING (CUSTOMER_ID)\n" +
+"            WHERE PURCHASE_ORDER.SALES_DATE BETWEEN ? AND ?" +
 "            GROUP BY (CUSTOMER.NAME)";
 
         try (Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
+            stmt.setDate(1, startDate);
+            stmt.setDate(2, endDate);
+            
             try (ResultSet rs = stmt.executeQuery())
             {
                 while (rs.next())
