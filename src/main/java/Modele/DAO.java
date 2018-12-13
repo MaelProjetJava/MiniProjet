@@ -429,7 +429,7 @@ public class DAO implements IDAO
 "                            PURCHASE_ORDER INNER JOIN PRODUCT USING (PRODUCT_ID)\n" +
 "                                    INNER JOIN CUSTOMER USING (CUSTOMER_ID)\n" +
 "                                    INNER JOIN MICRO_MARKET ON CUSTOMER.ZIP = MICRO_MARKET.ZIP_CODE\n" +
-"            GROUP BY (MICRO_MARKET.ZIP_CODE);";
+"            GROUP BY (MICRO_MARKET.ZIP_CODE)";
 
         try (Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
@@ -457,7 +457,7 @@ public class DAO implements IDAO
         String sql = "SELECT CUSTOMER.NAME, SUM(PURCHASE_ORDER.QUANTITY * PRODUCT.PURCHASE_COST) AS REVENU FROM\n" +
 "                            PURCHASE_ORDER INNER JOIN PRODUCT USING (PRODUCT_ID)\n" +
 "                                    INNER JOIN CUSTOMER USING (CUSTOMER_ID)\n" +
-"            GROUP BY (CUSTOMER.NAME);";
+"            GROUP BY (CUSTOMER.NAME)";
 
         try (Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
