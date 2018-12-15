@@ -1,10 +1,10 @@
 package Controlleur;
 
-import Modele.Customer;
 import Modele.DAO;
 import Modele.DataSourceFactory;
 import Modele.IDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebServlet(name = "Entry", urlPatterns = {"/Entry"})
-public class Entry extends HttpServlet {
+@WebServlet(name = "AdminStat", urlPatterns = {"/AdminStat"})
+public class AdminStat extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,43 +30,19 @@ public class Entry extends HttpServlet {
         
         IDAO dao = new DAO(DataSourceFactory.getDataSource());
         HttpSession userSession = request.getSession(true);
-        
-        String action = request.getParameter("action");
-        
-        if (action != null && action.equals("Connexion")) {
-            String login = request.getParameter("login");
-            String password = request.getParameter("mdp");
-            
-            User user = null;
-            
-            if (login != null && password != null) {
-                if (login.equals("admin") && password.equals("admin")) {
-                    user = new User(null);
-                } else {
-                    try {
-                        Customer customer = dao.login(login, password);
-                        if (customer != null)
-                            user = new User(customer);
-                    } catch(NumberFormatException e) {}
-                }
-            }
-            
-            if (user != null)
-                userSession.setAttribute("user", user);
-            else
-                request.setAttribute("erreurAut", "Identifiants incorrects !");
-        }
-        
         User user = (User) userSession.getAttribute("user");
         
-        if (user != null) {
-            if (user.isAdministrator())
-                response.sendRedirect(request.getContextPath() + "/AdminStat");
-            else
-                response.sendRedirect(request.getContextPath() + "/EditClientData");
-        } else {
-            request.getRequestDispatcher("/views/Connexion.jsp").forward(request, response);
+        if(user == null || !user.isAdministrator()) {
+            response.sendRedirect(request.getContextPath() + "/Entry");
+            return;
         }
+        
+        request.setAttribute("getCustomersRevenuesURL",  request.getContextPath() + "/GetCustomersRevenues");
+        request.setAttribute("getMicroMarketsRevenuesURL",  request.getContextPath() + "/GetMicroMarketsRevenues");
+        request.setAttribute("getProductCodesRevenuesURL",  request.getContextPath() + "/GetProductCodesRevenues");
+        request.setAttribute("editProductsURL", request.getContextPath() + "/EditProducts");
+        request.setAttribute("exitURL", request.getContextPath() + "/Exit");
+        request.getRequestDispatcher("/views/Admin.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
