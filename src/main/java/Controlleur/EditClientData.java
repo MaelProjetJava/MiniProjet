@@ -1,10 +1,10 @@
 package Controlleur;
 
+import Modele.Customer;
 import Modele.DAO;
 import Modele.DataSourceFactory;
 import Modele.IDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +35,34 @@ public class EditClientData extends HttpServlet {
         if(user == null || user.isAdministrator()) {
             response.sendRedirect(request.getContextPath() + "/Entry");
             return;
+        }
+        
+        String action = request.getParameter("action");
+        
+        if (action != null && action.equals("Modifier")) {
+            boolean success = false;
+            Customer customer = null;
+            try {
+                customer = (Customer) user.getCustomer().clone();
+                customer.setName(request.getParameter("nom"));
+                customer.setAddr1(request.getParameter("adresse1"));
+                customer.setAddr2(request.getParameter("adresse2"));
+                customer.setZip(request.getParameter("zip"));
+                customer.setCity(request.getParameter("ville"));
+                customer.setState(request.getParameter("etat"));
+                customer.setPhone(request.getParameter("tel"));
+                customer.setFax(request.getParameter("fax"));
+                customer.setEmail(request.getParameter("email"));
+                
+                success = dao.updateCustomer(customer);
+            } catch (Exception e) {}
+            
+            if (success) {
+                user.setCustomer(customer);
+                request.setAttribute("message", "Données modifiées avec succès !");
+            } else {
+                request.setAttribute("message", "Une erreur est survenue, impossible de modier les données !");
+            }
         }
         
         request.setAttribute("user", user.getCustomer());

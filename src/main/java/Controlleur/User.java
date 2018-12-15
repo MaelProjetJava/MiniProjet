@@ -24,4 +24,8 @@ class User {
     public Customer getCustomer() {
         return customer;
     }
+    
+    protected void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }
