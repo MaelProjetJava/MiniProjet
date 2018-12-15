@@ -45,42 +45,48 @@ public class PurchaseOrder {
         this.orderNum = orderNum;
     }
     
-    int getOrderNum()
+    public int getOrderNum()
     {
         return this.orderNum;
     }    
 
-    int getCustomerId()
+    public int getCustomerId()
     {
         return this.customerId;
     }
 
-    int getProductId()
+    public int getProductId()
     {
         return this.productId;
     }
+    
+    public String getProductName()
+    {
+        IDAO dao = new DAO(DataSourceFactory.getDataSource());
+        return dao.getProductName(productId);
+    }
 
-    int getQuantity()
+    public int getQuantity()
     {
         return this.quantity;
     }
     
-    double getShippingCost()
+    public double getShippingCost()
     {
         return this.shippingCost;
     }
     
-    Date getSalesDate()
+    public Date getSalesDate()
     {
         return this.salesDate;
     }
 
-    Date getShippingDate()
+    public Date getShippingDate()
     {
         return this.shippingDate;
     }
     
-    String getFreightCompany()
+    public String getFreightCompany()
     {
         return this.freightCompany;
     }

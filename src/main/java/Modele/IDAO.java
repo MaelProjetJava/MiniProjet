@@ -16,6 +16,7 @@ public interface IDAO {
     boolean addProduct(Product product);
     boolean deleteProduct(Product product);
     boolean updateProduct(Product product);
+    String getProductName(int productId);
     
     List<MicroMarket> getAllMicroMarkets();
     

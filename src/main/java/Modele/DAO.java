@@ -488,4 +488,24 @@ public class DAO implements IDAO
         }
         return result;    
     }        
+
+    @Override
+    public String getProductName(int productId) {
+        String result = null;
+        
+        String sql = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_ID = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+                stmt.setInt(1, productId);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next())
+                        result = rs.getString("DESCRIPTION");
+                }
+        }  catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+	}
+
+        return result;
+    }
 }
