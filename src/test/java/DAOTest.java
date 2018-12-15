@@ -122,7 +122,7 @@ public class DAOTest
     {
         List<Product> begin = myDAO.getAllProducts();
         Product toDelete = begin.get(0);
-        assertEquals(true, myDAO.deleteProduct(toDelete));
+        assertEquals(true, myDAO.deleteProduct(toDelete.getId()));
         assertEquals(begin.size() - 1, myDAO.getAllProducts().size());
     }
     
