@@ -481,7 +481,7 @@ public class DAO implements IDAO
     public List<Manufacturer> getAllManufacturers() {
         List<Manufacturer> result = new ArrayList<>();
 
-        String sql = "SELECT MANUFACTURER_ID, NAME FROM MANUFACTURER";
+        String sql = "SELECT MANUFACTURER_ID, NAME FROM MANUFACTURER ORDER BY (NAME)";
         try (Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
