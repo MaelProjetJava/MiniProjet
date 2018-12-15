@@ -20,7 +20,7 @@ public interface IDAO {
     String getProductName(int productId);
     
     List<Manufacturer> getAllManufacturers();
-    
+    List<ProductCode> getAllProductCodes();
     List<MicroMarket> getAllMicroMarkets();
     
     List<ProductCodeRevenue> getProductCodesRevenues(Date startDate,

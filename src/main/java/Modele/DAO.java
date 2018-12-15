@@ -504,4 +504,33 @@ public class DAO implements IDAO
         }
         return result;
     }
+
+    @Override
+    public List<ProductCode> getAllProductCodes() {
+        List<ProductCode> result = new ArrayList<>();
+
+        String sql = "SELECT * FROM PRODUCT_CODE";
+        try (Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            try (ResultSet rs = stmt.executeQuery())
+            {
+                while (rs.next())
+                {
+                    ProductCode productCode = new ProductCode(
+                            rs.getString("PROD_CODE"),
+                            rs.getString("DISCOUNT_CODE").charAt(0),
+                            rs.getString("DESCRIPTION")
+                    );
+                    
+                    result.add(productCode);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+        return result;
+    }
 }
