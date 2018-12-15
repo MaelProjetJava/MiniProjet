@@ -91,10 +91,8 @@ public class DAO implements IDAO
         String insertPurchaseOrder = "INSERT INTO PURCHASE_ORDER VALUES((SELECT MAX(ORDER_NUM) + 1 FROM PURCHASE_ORDER), ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement purchaseStatement = myConnection.prepareStatement(insertPurchaseOrder, Statement.RETURN_GENERATED_KEYS))
+            PreparedStatement purchaseStatement = myConnection.prepareStatement(insertPurchaseOrder))
         {
-            myConnection.setAutoCommit(false);
-
             purchaseStatement.setInt(1, order.getCustomerId());
             purchaseStatement.setInt(2, order.getProductId());
             purchaseStatement.setInt(3, order.getQuantity());
@@ -102,23 +100,13 @@ public class DAO implements IDAO
             purchaseStatement.setDate(5, order.getSalesDate());
             purchaseStatement.setDate(6, order.getShippingDate());
             purchaseStatement.setString(7, order.getFreightCompany());
-            try
-            {
-                purchaseStatement.executeUpdate();
-                myConnection.commit();
+            
+            if (purchaseStatement.executeUpdate() == 1);
                 return true;
-            } catch (Exception ex)
-            {
-                System.err.println(ex);
-                myConnection.rollback();
-            } finally
-            {
-                myConnection.setAutoCommit(true);
-            }
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
         }
+        
         return false;
     }
 
@@ -213,31 +201,22 @@ public class DAO implements IDAO
         try (	Connection myConnection = myDataSource.getConnection();
 		PreparedStatement statement = myConnection.prepareStatement(sql))
         {
-            myConnection.setAutoCommit(false);
-            try
-            {
-                statement.setInt(1, order.getCustomerId());
-                statement.setInt(2, order.getProductId());
-                statement.setInt(3, order.getQuantity());
-                statement.setDouble(4, order.getShippingCost());
-                statement.setDate(5, order.getSalesDate());
-                statement.setDate(6, order.getShippingDate());
-                statement.setString(7, order.getFreightCompany());
-                statement.setInt(8, order.getOrderNum());
-                if (statement.executeUpdate() != 1)
-                    return false;
-                myConnection.commit();
-            } catch (Exception ex) {
-        	myConnection.rollback();
-                return false;
-            } finally {
-                myConnection.setAutoCommit(true);				
-            }
+            statement.setInt(1, order.getCustomerId());
+            statement.setInt(2, order.getProductId());
+            statement.setInt(3, order.getQuantity());
+            statement.setDouble(4, order.getShippingCost());
+            statement.setDate(5, order.getSalesDate());
+            statement.setDate(6, order.getShippingDate());
+            statement.setString(7, order.getFreightCompany());
+            statement.setInt(8, order.getOrderNum());
+            
+            if (statement.executeUpdate() == 1)
+                return true;
 	} catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-            }
-        return true;
+        }
+        
+        return false;
     }
 
     @Override
@@ -273,10 +252,8 @@ public class DAO implements IDAO
         String insertProduct = "INSERT INTO PRODUCT VALUES((SELECT MAX(PRODUCT_ID) + 1 FROM PRODUCT), ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection myConnection = myDataSource.getConnection();
-            PreparedStatement productStatement = myConnection.prepareStatement(insertProduct, Statement.RETURN_GENERATED_KEYS))
+            PreparedStatement productStatement = myConnection.prepareStatement(insertProduct))
         {
-            myConnection.setAutoCommit(false);
-
             productStatement.setInt(1, product.getManufacturerId());
             productStatement.setString(2, product.getProductCode());
             productStatement.setDouble(3, product.getPurchaseCost());
@@ -284,23 +261,13 @@ public class DAO implements IDAO
             productStatement.setDouble(5, product.getMarkup());
             productStatement.setString(6, product.isAvailable() ? "TRUE" : "FALSE");
             productStatement.setString(7, product.getDescription());
-            try
-            {
-                productStatement.executeUpdate();
-                myConnection.commit();
+            
+            if (productStatement.executeUpdate() == 1);
                 return true;
-            } catch (Exception ex)
-            {
-                System.err.println(ex);
-                myConnection.rollback();
-            } finally
-            {
-                myConnection.setAutoCommit(true);
-            }
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
         }
+        
         return false;
     }
 
@@ -328,31 +295,22 @@ public class DAO implements IDAO
         try (	Connection myConnection = myDataSource.getConnection();
 		PreparedStatement statement = myConnection.prepareStatement(sql))
         {
-            myConnection.setAutoCommit(false);
-            try
-            {
-                statement.setInt(1, product.getManufacturerId());
-                statement.setString(2, product.getProductCode());
-                statement.setDouble(3, product.getPurchaseCost());
-                statement.setInt(4, product.getQuantityOnHand());
-                statement.setDouble(5, product.getMarkup());
-                statement.setString(6, product.isAvailable() ? "TRUE" : "FALSE");
-                statement.setString(7, product.getDescription());
-                statement.setInt(8, product.getId());
-                if (statement.executeUpdate() != 1)
-                    return false;
-                myConnection.commit();
-            } catch (Exception ex) {
-        	myConnection.rollback();
-                return false;
-            } finally {
-                myConnection.setAutoCommit(true);				
-            }
+            statement.setInt(1, product.getManufacturerId());
+            statement.setString(2, product.getProductCode());
+            statement.setDouble(3, product.getPurchaseCost());
+            statement.setInt(4, product.getQuantityOnHand());
+            statement.setDouble(5, product.getMarkup());
+            statement.setString(6, product.isAvailable() ? "TRUE" : "FALSE");
+            statement.setString(7, product.getDescription());
+            statement.setInt(8, product.getId());
+            
+            if (statement.executeUpdate() == 1)
+                    return true;
 	} catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
         }
-        return true;
+        
+        return false;
     }
 
     @Override
