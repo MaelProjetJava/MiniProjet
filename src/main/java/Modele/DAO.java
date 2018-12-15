@@ -9,8 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -474,6 +474,34 @@ public class DAO implements IDAO
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
 	}
 
+        return result;
+    }
+
+    @Override
+    public List<Manufacturer> getAllManufacturers() {
+        List<Manufacturer> result = new ArrayList<>();
+
+        String sql = "SELECT MANUFACTURER_ID, NAME FROM MANUFACTURER";
+        try (Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            try (ResultSet rs = stmt.executeQuery())
+            {
+                while (rs.next())
+                {
+                    Manufacturer manufacturer = new Manufacturer(
+                        rs.getInt("MANUFACTURER_ID"),
+                        rs.getString("NAME")
+                    );
+                    
+                    result.add(manufacturer);
+                }
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            return null;
+        }
         return result;
     }
 }

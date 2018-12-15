@@ -19,6 +19,8 @@ public interface IDAO {
     boolean updateProduct(Product product);
     String getProductName(int productId);
     
+    List<Manufacturer> getAllManufacturers();
+    
     List<MicroMarket> getAllMicroMarkets();
     
     List<ProductCodeRevenue> getProductCodesRevenues(Date startDate,
