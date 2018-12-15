@@ -22,17 +22,17 @@ public class ProductCode {
         this.description = description;
     }
     
-    String getCode()
+    public String getCode()
     {
         return this.code;
     }
     
-    char getDiscountCode()
+    public char getDiscountCode()
     {
         return this.discountCode;
     }
     
-    String getdescription()
+    public String getdescription()
     {
         return this.description;
     }
