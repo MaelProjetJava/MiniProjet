@@ -452,4 +452,28 @@ public class DAO implements IDAO
 
         return result;
     }
+
+    @Override
+    public PurchaseOrder getPurchaseOrder(int orderNum) {
+        PurchaseOrder result = null;
+        
+        String sql = "SELECT * FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+                stmt.setInt(1, orderNum);
+                
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        result = new PurchaseOrder(rs.getInt("ORDER_NUM"), rs.getInt("CUSTOMER_ID"), rs.getInt("PRODUCT_ID"),
+                                                    rs.getInt("QUANTITY"), rs.getDouble("SHIPPING_COST"), rs.getDate("SALES_DATE"),
+                                                    rs.getDate("SHIPPING_DATE"), rs.getString("FREIGHT_COMPANY"));
+                    }
+                }
+        }  catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+	}
+
+        return result;
+    }
 }

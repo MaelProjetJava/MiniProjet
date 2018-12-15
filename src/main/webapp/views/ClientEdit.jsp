@@ -10,24 +10,24 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="../css/ClientEdit.css">
-        <title>Edition des bon de commandes </title>
+        <link rel="stylesheet" href="css/ClientEdit.css">
+        <title>Edition des bons de commandes </title>
     </head>
     <body>
-        <h1> Edition des bon de commandes  </h1>
+        <h1> Edition des bons de commandes  </h1>
         <div id="box">
         <form method="POST">
             <div class="article">
                 <label for ="article "> <span> Nom de l'article :</span> </label>
                 <select id ="article" name="article">
                     <c:forEach items="${articles}" var="article" >
-                        <option value="${article.id}" <c:if test="${article.id=purchaseOrder.productId}" >selected</c:if>>${article.description} </option>  
+                        <option value="${article.id}" <c:if test="${article.id == purchaseOrder.productId}" >selected</c:if>>${article.description} </option>  
                     </c:forEach>
                 </select>
            </div>
                    
            <div class =" quantites">
-                <label for = quantites> <span> Quantitées : </span> </label>
+                <label for = quantites> <span> Quantité : </span> </label>
                 <input id="quantites" name="quantites" value="${purchaseOrder.quantity}" style="width:200px;" > 
            </div>     
                 
@@ -48,10 +48,14 @@
            
             <div class="tel">
                 <label for="tel"> <span>Transporteur : </span>  </label>
-                <input id="tel" name="tel" value="${purchaseOrder.freighCompany}" style="width:200px;" >
+                <input id="tel" name="tel" value="${purchaseOrder.freightCompany}" style="width:200px;" >
             </div> 
             
-            <input name="action" value="Modifier/ajout" type="SUBMIT"> 
+            <c:if test="${main_form_action eq 'Modifier'}">
+                <input type="hidden" name="orderNum" value="${purchaseOrder.orderNum}">
+                <input type="hidden" name="customerId" value="${purchaseOrder.customerId}">
+            </c:if>
+            <input name="action" value="${main_form_action}" type="SUBMIT"> 
         </form>  
         </div>
             
@@ -75,7 +79,7 @@
                     <td>${pur.shippingDate}</td>
                     <td>${pur.freightCompany}</td>
                     <td>
-                        <form method="GET">
+                        <form method="POST">
                             <input type="hidden" name="ordernum" value="${pur.orderNum}">
                             <input type="hidden" name="action" value="modify">
                             <input value="Modifier" type="submit">
@@ -92,7 +96,9 @@
             </c:forEach>  
         </table>     
         </div>
-                
+        
+        <p>${message}</p>
+
         <a href="${editClientDataURL}">Editer ses données utilisateur</a>  
         <a href="${exitURL}">Se déconnecter</a>            
     </body>

@@ -3,8 +3,9 @@ package Controlleur;
 import Modele.DAO;
 import Modele.DataSourceFactory;
 import Modele.IDAO;
+import Modele.PurchaseOrder;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +37,52 @@ public class EditPurchaseOrders extends HttpServlet {
             return;
         }
         
+        String action = request.getParameter("action");
+        
+        if (action != null) {
+            if (action.equals("delete")) {
+                if (dao.deletePurchaseOrder(Integer.valueOf(request.getParameter("ordernum"))))
+                    request.setAttribute("message", "Bon de commande supprimé avec succès !");
+                else
+                    request.setAttribute("message", "Erreur lors de la suppression du bon de commande !");
+            } else if (action.equals("modify")) {
+                PurchaseOrder purchase = dao.getPurchaseOrder(Integer.valueOf(request.getParameter("ordernum")));
+                if (purchase != null) {
+                    request.setAttribute("purchaseOrder", purchase);
+                    request.setAttribute("main_form_action", "Modifier");
+                }
+            } else if (action.equals("Ajouter")) {
+
+            } else if (action.equals("Modifier")) {
+                boolean success = false;
+                
+                try {
+                    PurchaseOrder purchase = new PurchaseOrder(
+                            Integer.valueOf(request.getParameter("orderNum")),
+                            Integer.valueOf(request.getParameter("customerId")),
+                            Integer.valueOf(request.getParameter("article")),
+                            Integer.valueOf(request.getParameter("quantites")),
+                            Double.valueOf(request.getParameter("Frais")),
+                            Date.valueOf(request.getParameter("dateA")),
+                            Date.valueOf(request.getParameter("dateE")),
+                            request.getParameter("tel")
+                    );
+                    
+                    success = dao.updatePurchaseOrder(purchase);
+                } catch (Exception e) {}
+                
+                if (success)
+                    request.setAttribute("message", "Bon de commande modifié avec succès !");
+                else
+                    request.setAttribute("message", "Une erreur est survenue, impossible de modifier le bon de commande !");
+            }
+        }
+        
+        if (request.getAttribute("main_form_action") == null)
+            request.setAttribute("main_form_action", "Ajouter");
+        
         request.setAttribute("purchaseOrders", dao.getPurchaseOrders(user.getCustomer()));
+        request.setAttribute("articles", dao.getAllProducts());
         request.setAttribute("exitURL", request.getContextPath() + "/Exit");
         request.setAttribute("editClientDataURL", request.getContextPath() + "/EditClientData");
         request.getRequestDispatcher("/views/ClientEdit.jsp").forward(request, response);
