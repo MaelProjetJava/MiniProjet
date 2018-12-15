@@ -1,5 +1,8 @@
 package Controlleur;
 
+import Modele.DAO;
+import Modele.DataSourceFactory;
+import Modele.IDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -25,6 +28,7 @@ public class EditClientData extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        IDAO dao = new DAO(DataSourceFactory.getDataSource());
         HttpSession userSession = request.getSession(true);
         User user = (User) userSession.getAttribute("user");
         
@@ -34,6 +38,7 @@ public class EditClientData extends HttpServlet {
         }
         
         request.setAttribute("user", user.getCustomer());
+        request.setAttribute("micromarkets", dao.getAllMicroMarkets());
         request.setAttribute("exitURL", request.getContextPath() + "/Exit");
         request.setAttribute("editPurchaseOrdersURL", request.getContextPath() + "/EditPurchaseOrders");
         request.getRequestDispatcher("/views/Client.jsp").forward(request, response);

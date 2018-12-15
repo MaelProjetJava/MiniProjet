@@ -382,8 +382,8 @@ public class DAO implements IDAO
             {
                 while (rs.next())
                 {
-                    result.add(new MicroMarket(rs.getString("PRODUCT_ID"), rs.getDouble("MANUFACTURER_ID"),
-                                                rs.getDouble("PRODUCT_CODE"), rs.getDouble("PURCHASE_COST")));
+                    result.add(new MicroMarket(rs.getString("ZIP_CODE"), rs.getDouble("RADIUS"),
+                                                rs.getDouble("AREA_LENGTH"), rs.getDouble("AREA_WIDTH")));
                 }
             }
         } catch (SQLException ex)

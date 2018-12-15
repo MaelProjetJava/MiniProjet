@@ -45,7 +45,7 @@
                 
                 <select id ="zip" name="zip" style="margin:auto;">
                     <c:forEach items="${micromarkets}" var="micromarket" >
-                        <option value="${micromarker.zipCode}" <c:if test="${zip.zipCode=user.zip}" >selected</c:if>>${zip.zipCode}</option>  
+                        <option value="${micromarker.zipCode}" <c:if test="${micromarket.zipCode==user.zip}" >selected</c:if>>${micromarket.zipCode}</option>  
                     </c:forEach>
                 </select>
                 

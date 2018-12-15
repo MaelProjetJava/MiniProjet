@@ -25,22 +25,22 @@ public class MicroMarket {
     }
     
     
-    String getZipCode()
+    public String getZipCode()
     {
         return this.zipCode;
     }
     
-    double getRadius()
+    public double getRadius()
     {
         return this.radius;
     }
     
-    double getLenght()
+    public double getLenght()
     {
         return this.lenght;
     }
     
-    double getWidth()
+    public double getWidth()
     {
         return this.width;
     }
