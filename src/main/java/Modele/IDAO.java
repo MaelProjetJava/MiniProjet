@@ -9,7 +9,7 @@ public interface IDAO {
     
     List<PurchaseOrder> getPurchaseOrders(Customer customer);
     boolean addPurchaseOrder(PurchaseOrder order);
-    boolean deletePurchaseOrders(PurchaseOrder order);
+    boolean deletePurchaseOrder(int orderNum);
     boolean updatePurchaseOrder(PurchaseOrder order);
     
     List<Product> getAllProducts();

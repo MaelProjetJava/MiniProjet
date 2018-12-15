@@ -189,25 +189,20 @@ public class DAO implements IDAO
     }
 
     @Override
-    public boolean deletePurchaseOrders(PurchaseOrder order)
+    public boolean deletePurchaseOrder(int orderNum)
     {
         String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
 	try (Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
-            stmt.setInt(1, order.getOrderNum());
+            stmt.setInt(1, orderNum);
 
-            int tmp;
-            if ((tmp = (stmt.executeUpdate())) != 1)
-            {
-                System.out.println(order.getOrderNum());
-                System.out.println("stmt.executeUpdate: " + tmp);
-                return false;
-            }
+            if (stmt.executeUpdate() == 1)
+                return true;
 	} catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-            return false;
 	}
+        
         return true;
     }
 

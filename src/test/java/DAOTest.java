@@ -89,8 +89,8 @@ public class DAOTest
         PurchaseOrder purchaseOrder = new PurchaseOrder(1, 980001);
         assertEquals(true, myDAO.addPurchaseOrder(purchaseOrder));
         List<PurchaseOrder> begin = myDAO.getAllPurchaseOrders();
-        PurchaseOrder tmp = begin.get(begin.size() - 1);;
-        assertEquals(true, myDAO.deletePurchaseOrders(tmp));
+        PurchaseOrder tmp = begin.get(begin.size() - 1);
+        assertEquals(true, myDAO.deletePurchaseOrder(tmp.getOrderNum()));
         List<PurchaseOrder> end = myDAO.getAllPurchaseOrders();
         assertEquals(begin.size(), end.size() + 1);
     }
