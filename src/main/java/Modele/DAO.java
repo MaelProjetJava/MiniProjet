@@ -272,20 +272,21 @@ public class DAO implements IDAO
     }
 
     @Override
-    public boolean deleteProduct(Product product)
+    public boolean deleteProduct(int productId)
     {
         String sql = "DELETE FROM PRODUCT WHERE PRODUCT_ID = ?";
 	try (Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
-            stmt.setInt(1, product.getId());
-            if ((stmt.executeUpdate()) != 1)
-                return false;
+            stmt.setInt(1, productId);
+            
+            if (stmt.executeUpdate() == 1)
+                return true;
 	} catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-            return false;
 	}
-        return true;
+        
+        return false;
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface IDAO {
     
     List<Product> getAllProducts();
     boolean addProduct(Product product);
-    boolean deleteProduct(Product product);
+    boolean deleteProduct(int ProductId);
     boolean updateProduct(Product product);
     String getProductName(int productId);
     
