@@ -52,7 +52,27 @@ public class EditPurchaseOrders extends HttpServlet {
                     request.setAttribute("main_form_action", "Modifier");
                 }
             } else if (action.equals("Ajouter")) {
-
+                boolean success = false;
+                
+                try {
+                    PurchaseOrder purchase = new PurchaseOrder(
+                            0,
+                            user.getCustomer().getId(),
+                            Integer.valueOf(request.getParameter("article")),
+                            Integer.valueOf(request.getParameter("quantites")),
+                            Double.valueOf(request.getParameter("Frais")),
+                            Date.valueOf(request.getParameter("dateA")),
+                            Date.valueOf(request.getParameter("dateE")),
+                            request.getParameter("tel")
+                    );
+                    
+                    success = dao.addPurchaseOrder(purchase);
+                } catch (Exception e) {}
+                
+                if (success)
+                    request.setAttribute("message", "Bon de commande ajouté avec succès !");
+                else
+                    request.setAttribute("message", "Une erreur est survenue, impossible d'ajouter le bon de commande !");
             } else if (action.equals("Modifier")) {
                 boolean success = false;
                 
