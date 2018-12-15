@@ -14,6 +14,7 @@ public interface IDAO {
     boolean updatePurchaseOrder(PurchaseOrder order);
     
     List<Product> getAllProducts();
+    Product getProduct(int productId);
     boolean addProduct(Product product);
     boolean deleteProduct(int ProductId);
     boolean updateProduct(Product product);
