@@ -166,35 +166,26 @@ public class DAO implements IDAO
         try (	Connection myConnection = myDataSource.getConnection();
 		PreparedStatement statement = myConnection.prepareStatement(sql))
         {
-            myConnection.setAutoCommit(false);
-            try
-            {
-                statement.setString(1, newCustomerData.getDiscountCode());
-                statement.setString(2, newCustomerData.getZip());
-                statement.setString(3, newCustomerData.getName());
-                statement.setString(4, newCustomerData.getAddr1());
-                statement.setString(5, newCustomerData.getAddr2());
-                statement.setString(6, newCustomerData.getCity());
-                statement.setString(7, newCustomerData.getState());
-                statement.setString(8, newCustomerData.getPhone());
-                statement.setString(9, newCustomerData.getFax());
-                statement.setString(10, newCustomerData.getEmail());
-                statement.setInt(11, newCustomerData.getCreditLimit());
-                statement.setInt(12, newCustomerData.getId());
-                if (statement.executeUpdate() != 1)
-                    return false;
-                myConnection.commit();
-            } catch (Exception ex) {
-        	myConnection.rollback();
-                return false;
-            } finally {
-                myConnection.setAutoCommit(true);				
-            }
+            statement.setString(1, newCustomerData.getDiscountCode());
+            statement.setString(2, newCustomerData.getZip());
+            statement.setString(3, newCustomerData.getName());
+            statement.setString(4, newCustomerData.getAddr1());
+            statement.setString(5, newCustomerData.getAddr2());
+            statement.setString(6, newCustomerData.getCity());
+            statement.setString(7, newCustomerData.getState());
+            statement.setString(8, newCustomerData.getPhone());
+            statement.setString(9, newCustomerData.getFax());
+            statement.setString(10, newCustomerData.getEmail());
+            statement.setInt(11, newCustomerData.getCreditLimit());
+            statement.setInt(12, newCustomerData.getId());
+            
+            if (statement.executeUpdate() == 1)
+                return true;
 	} catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-            }
-        return true;
+        }
+        
+        return false;
     }
 
     @Override
