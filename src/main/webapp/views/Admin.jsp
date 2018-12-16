@@ -64,11 +64,23 @@
             function showError(xhr, status, message) {
                 $("#errormessage").html("Erreur: " + status + ": " + message);
             }
+            
+            function startDate() {
+                return $("#startdate").val();
+            }
+            
+            function endDate() {
+                return $("#enddate").val();
+            }
+            
+            function createUrl(baseUrl) {
+                return baseUrl + "?start=" + startDate() + "&end=" + endDate();
+            }
 
             function showProductCodesRevenues() {
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
-                    url: "${getProductCodesRevenuesURL}",
+                    url: createUrl("${getProductCodesRevenuesURL}"),
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
@@ -94,7 +106,7 @@
             function showMicroMarketsRevenues() {
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
-                    url: "${getMicroMarketsRevenuesURL}",
+                    url: createUrl("${getMicroMarketsRevenuesURL}"),
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
@@ -121,7 +133,7 @@
             function showCustomersRevenues() {
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
-                    url: "${getCustomersRevenuesURL}",
+                    url: createUrl("${getCustomersRevenuesURL}"),
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
