@@ -82,7 +82,7 @@
             <div class="email">
                 
                 <label for ="email" ><span> Email : </span> </label>
-                <input id ="email" name="email" value="${user.email}" type="email" style="width:200px;">
+                <input id ="email" name="email" value="${user.email}" type="text" style="width:200px;">
                 
             </div>
                 
