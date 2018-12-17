@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Statistiques des commandes</title>
+         <link rel="stylesheet" href="css/Admin.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
@@ -28,6 +29,7 @@
                 var options = {
                     title: 'Chiffres d\'affaires par client',
                     is3D: true
+                    
                 };
                 
                 var chart = new google.visualization.PieChart(document.getElementById('customersRevenuesChart'));
@@ -159,7 +161,8 @@
     </head>
     <body>
         <h1>Statistiques des commandes</h1>
-
+        <a href="${editProductsURL}">Editer les produits</a>     
+        <a href="${exitURL}">Se déconnecter</a>  
         <form id="codeForm" onsubmit="event.preventDefault(); showRevenuesCharts();">
             <fieldset>
                 <legend>Saisir des dates</legend>
@@ -180,7 +183,6 @@
         <div id="microMarketsRevenuesChart" style="width: 900px; height: 500px;"></div>
         <div id="customersRevenuesChart" style="width: 900px; height: 500px;"></div>
         
-        <a href="${editProductsURL}">Editer les produits</a>     
-        <a href="${exitURL}">Se déconnecter</a>    
+          
     </body>
 </html>

@@ -58,6 +58,8 @@
             <input name="action" value="${main_form_action}" type="SUBMIT"> 
         </form>  
         </div>
+        
+        <p>${message}</p>
             
         <div id=" result">
         <table border="1">
@@ -68,6 +70,8 @@
                 <th>Date d'achat</th>
                 <th>Date d'envois</th>
                 <th>Transporteur</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
             </tr>
                 
             <c:forEach var="pur" items="${purchaseOrders}">
@@ -97,7 +101,7 @@
         </table>     
         </div>
         
-        <p>${message}</p>
+      
 
         <a href="${editClientDataURL}">Editer ses données utilisateur</a>  
         <a href="${exitURL}">Se déconnecter</a>            

@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/ClientEdit.css">
+        <link rel="stylesheet" href="css/AdminProd.css">
         <title>Edition des produits</title>
     </head>
     <body>
@@ -45,7 +45,7 @@
                 <input id="prix" name="prix" value="${product.purchaseCost}"  style="width:200px;">
             </div>
                 
-            <div class =" quantites">
+            <div class ="quantites">
                 <label for = quantites><span>Quantité:</span></label>
                 <input id="quantite" name="quantite" value="${product.quantityOnHand}" style="width:200px;" >
             </div>    
@@ -61,10 +61,12 @@
             <input name="action" value="${main_form_action}" type="SUBMIT">  
         </form>   
         </div>
+        
+        <p>${message}</p>
                  
                 
-        <div id="result">
-        <table border="1">
+        
+        <table id="result" border="1">
             <tr>
                 <th>Description</th>
                 <th>Fabricant</th>
@@ -73,6 +75,8 @@
                 <th>Quantité</th>
                 <th>Marge</th>
                 <th>Disponible</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
             </tr>
             <c:forEach var="pro" items="${products}">
                 <tr>
@@ -109,9 +113,9 @@
 		</tr>	  		    
             </c:forEach>  
 	</table>
-        </div>
+        
             
-        <p>${message}</p>
+        
 
         <a href="${adminStatURL}">Voir les statistiques</a>     
         <a href="${exitURL}">Se déconnecter</a>            
